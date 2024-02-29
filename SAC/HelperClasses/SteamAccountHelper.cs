@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace SAC.HelperClasses
 {
-    class SteamAccountHelper
+    internal class SteamAccountHelper
     {
         public static readonly List<string> GoodAccountsList = new List<string>();
         public static readonly List<string> sGProtectedAccountsList = new List<string>();
@@ -36,7 +36,7 @@ namespace SAC.HelperClasses
             if (!(callback is null))
                 steamUser.LogOn(new SteamUser.LogOnDetails { Username = userName, Password = password });
             else
-                MessageBox.Show($"Callback is null", "Internal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"Callback is null", @"Internal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public static void OnDisconnected(SteamClient.DisconnectedCallback callback)
@@ -44,7 +44,7 @@ namespace SAC.HelperClasses
             if (!(callback is null))
                 isRunning = false;
             else
-                MessageBox.Show($"Callback is null", "Internal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"Callback is null", @"Internal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public static void OnLoggedOn(SteamUser.LoggedOnCallback callback)

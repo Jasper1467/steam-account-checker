@@ -52,56 +52,56 @@ namespace SAC
 
         private void ButtonStart_Click(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedIndex == 1)
+            switch (tabControl1.SelectedIndex)
             {
-                try
-                {
-                    if (!(SteamAccountHelper.filePath == string.Empty))
-                    {
-                        if (File.Exists(SteamAccountHelper.filePath))
-                        {
-                            if (!(SteamAccountHelper.fileContent == string.Empty))
-                            {
-                                if (!(SteamAccountHelper.fileContent.Contains(" ")))
-                                {
-                                    BackgroundWorker automaticWorker = new BackgroundWorker();
-
-                                    LogHelper.Log("Cleaning up...\n");
-                                    AccountChecker.CleanupUpdate();
-
-                                    LogHelper.Log("Starting automatic check...\n");
-                                    automaticWorker.DoWork += new DoWorkEventHandler(AutomaticCheckBW_DoWork);
-                                    automaticWorker.RunWorkerAsync();
-
-                                    UIHelper.EnableUI(false);
-                                    UIHelper.ShowUI(true);
-                                }
-                                else
-                                    MessageBox.Show("The file contains an invalid character (space) and it may fuck up with checking.\n\nThis will be fixed in a newer version but in the meantime here's what you can do to fix it:\n1. Edit the file you're using by deleting any strings that contains space;\n2. Load the file again and re-check;\n3. (Optional) Throw your PC out the window.", "File contains invalid character", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                            else
-                                MessageBox.Show("The file you tried to check for doesn't exist or is inaccessible. Please try placing the file in a different location", "File", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                            MessageBox.Show("File Path needs to have content in it", "File Path", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else
-                        MessageBox.Show($"You need to open a file with Steam accounts", "Open a file", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Failed. Error: {ex.Message}", "Internal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else if (tabControl1.SelectedIndex == 0)
-            {
-                if (Program.mw.textBox1.Text == "" | Program.mw.textBox2.Text == "")
-                    MessageBox.Show("You need to enter a username and password", "Manual Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                else
-                {
+                case 1:
                     try
                     {
-                        BackgroundWorker manualWorker = new BackgroundWorker();
+                        if (SteamAccountHelper.filePath != string.Empty)
+                        {
+                            if (File.Exists(SteamAccountHelper.filePath))
+                            {
+                                if (SteamAccountHelper.fileContent != string.Empty)
+                                {
+                                    if (!(SteamAccountHelper.fileContent.Contains(" ")))
+                                    {
+                                        var automaticWorker = new BackgroundWorker();
+
+                                        LogHelper.Log("Cleaning up...\n");
+                                        AccountChecker.CleanupUpdate();
+
+                                        LogHelper.Log("Starting automatic check...\n");
+                                        automaticWorker.DoWork += new DoWorkEventHandler(AutomaticCheckBW_DoWork);
+                                        automaticWorker.RunWorkerAsync();
+
+                                        UIHelper.EnableUI(false);
+                                        UIHelper.ShowUI(true);
+                                    }
+                                    else
+                                        MessageBox.Show("The file contains an invalid character (space) and it may fuck up with checking.\n\nThis will be fixed in a newer version but in the meantime here's what you can do to fix it:\n1. Edit the file you're using by deleting any strings that contains space;\n2. Load the file again and re-check;\n3. (Optional) Throw your PC out the window.", "File contains invalid character", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                                else
+                                    MessageBox.Show("The file you tried to check for doesn't exist or is inaccessible. Please try placing the file in a different location", "File", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                                MessageBox.Show("File Path needs to have content in it", "File Path", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        else
+                            MessageBox.Show($"You need to open a file with Steam accounts", "Open a file", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed. Error: {ex.Message}", "Internal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                    break;
+                case 0 when Program.mw.textBox1.Text == "" | Program.mw.textBox2.Text == "":
+                    MessageBox.Show("You need to enter a username and password", "Manual Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    break;
+                case 0:
+                    try
+                    {
+                        var manualWorker = new BackgroundWorker();
 
                         LogHelper.Log("Cleaning up...\n");
                         AccountChecker.CleanupUpdate();
@@ -117,10 +117,12 @@ namespace SAC
                     {
                         MessageBox.Show($"Failed. Error: {ex.Message}", "Internal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                }
+
+                    break;
+                default:
+                    MessageBox.Show("Choose 'Check manually' or 'Check automatically' to check for steam accounts", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    break;
             }
-            else
-                MessageBox.Show("Choose 'Check manually' or 'Check automatically' to check for steam accounts", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public void AutomaticCheckBW_DoWork(object sender, DoWorkEventArgs e)

@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace SAC.HelperClasses
 {
-    class AccountExporterHelper
+    internal class AccountExporterHelper
     {
         public enum WhatToExport
         {
@@ -15,41 +15,43 @@ namespace SAC.HelperClasses
 
         public static void Export(WhatToExport whatToExport)
         {
-            if (!(SteamAccountHelper.localToExport == string.Empty))
+            if (SteamAccountHelper.localToExport != string.Empty)
             {
                 try
                 {
                     switch (whatToExport)
                     {
                         case WhatToExport.GOODACCOUNTS:
-                            string goodAccounts = string.Join("", SteamAccountHelper.GoodAccountsList.ToArray());
-                            StreamWriter streamWriterGoodAccounts = new StreamWriter($"{SteamAccountHelper.localToExport}\\Good Accounts.txt");
+                            var goodAccounts = string.Join("", SteamAccountHelper.GoodAccountsList.ToArray());
+                            var streamWriterGoodAccounts = new StreamWriter($"{SteamAccountHelper.localToExport}\\Good Accounts.txt");
 
                             streamWriterGoodAccounts.WriteLine(goodAccounts);
                             streamWriterGoodAccounts.Close();
                             break;
 
                         case WhatToExport.BADCCOUNTS:
-                            string badAccounts = string.Join("", SteamAccountHelper.badAccountsList.ToArray());
-                            StreamWriter streamWriterBadAccounts = new StreamWriter($"{SteamAccountHelper.localToExport}\\Bad Accounts.txt");
+                            var badAccounts = string.Join("", SteamAccountHelper.badAccountsList.ToArray());
+                            var streamWriterBadAccounts = new StreamWriter($"{SteamAccountHelper.localToExport}\\Bad Accounts.txt");
 
                             streamWriterBadAccounts.WriteLine(badAccounts);
                             streamWriterBadAccounts.Close();
                             break;
 
                         case WhatToExport.SGPROTECTEDACCOUNTS:
-                            string sGProtectedAccounts = string.Join("", SteamAccountHelper.sGProtectedAccountsList.ToArray());
-                            StreamWriter streamWriterSGAccounts = new StreamWriter($"{SteamAccountHelper.localToExport}\\SteamGuard protected Accounts.txt");
+                            var sGProtectedAccounts = string.Join("", SteamAccountHelper.sGProtectedAccountsList.ToArray());
+                            var streamWriterSGAccounts = new StreamWriter($"{SteamAccountHelper.localToExport}\\SteamGuard protected Accounts.txt");
 
                             streamWriterSGAccounts.WriteLine(sGProtectedAccounts);
                             streamWriterSGAccounts.Close();
                             break;
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(whatToExport), whatToExport, null);
                     }
-                    MessageBox.Show("Done!", "SAS.exe", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(@"Done!", @"SAS.exe", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Couldn't write. Error: {ex.Message}", "SAS.exe", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($@"Couldn't write. Error: {ex.Message}", @"SAS.exe", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else

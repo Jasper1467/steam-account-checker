@@ -5,12 +5,12 @@ using System.Windows.Forms;
 
 namespace SAC
 {
-    class AccountChecker
+    internal class AccountChecker
     {
         private static int firstUsername = 0; //Do not change - gets >username<  :password
         private static int firstPassword = 1; //Do not change - gets username:  >password<
 
-        delegate void SetVisibilityCallback(bool isVisible);
+        private delegate void SetVisibilityCallback(bool isVisible);
 
         public static void CheckManually()
         {
@@ -42,23 +42,21 @@ namespace SAC
         public static void CheckAutomatically()
         {
             SteamAccountHelper.filePath = Program.mw.textBoxFile.Text;
-            SteamAccountHelper.maximumData = SteamAccountHelper.fileContent.Split(new[] { ':', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Length / 2;
+            var splitUsersPasswords = SteamAccountHelper.fileContent.Split(new[] { ':', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            SteamAccountHelper.maximumData = splitUsersPasswords.Length / 2;
             SteamAccountHelper.remainingAccounts = SteamAccountHelper.maximumData;
 
             UIHelper.UpdateRemainingLabel(SteamAccountHelper.remainingAccounts.ToString());
 
-            while (SteamAccountHelper.currentValue < SteamAccountHelper.maximumData)
+            for (var i = 0; i < splitUsersPasswords.Length; i += 2)
             {
-                SteamAccountHelper.currentValue++;
                 try
                 {
-                    string[] splitUsersPasswords = SteamAccountHelper.fileContent.Split(new[] { ':', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                    SteamAccountHelper.userName = splitUsersPasswords[i];
+                    SteamAccountHelper.password = splitUsersPasswords[i + 1];
 
                     SteamAccountHelper.steamClient = new SteamClient();
                     SteamAccountHelper.manager = new CallbackManager(SteamAccountHelper.steamClient);
-
-                    SteamAccountHelper.userName = splitUsersPasswords[firstUsername];
-                    SteamAccountHelper.password = splitUsersPasswords[firstPassword];
 
                     SteamAccountHelper.steamUser = SteamAccountHelper.steamClient.GetHandler<SteamUser>();
 
@@ -75,13 +73,10 @@ namespace SAC
                     {
                         SteamAccountHelper.manager.RunWaitCallbacks(TimeSpan.FromSeconds(1));
                     }
-
-                    firstUsername += 2;
-                    firstPassword += 2;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Failed. Error: {ex.Message}", "Internal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($@"Failed. Error: {ex.Message}", @"Internal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

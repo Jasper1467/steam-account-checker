@@ -3,14 +3,14 @@ using System.Windows.Forms;
 
 namespace SAC
 {
-    static class Program
+    internal static class Program
     {
         public static MainWindow mw = new MainWindow();
         public static ViewThirdPartyLibraries vtPLibWindow = new ViewThirdPartyLibraries();
         public static ViewSoftwareLicense vSLWindow = new ViewSoftwareLicense();
 
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();

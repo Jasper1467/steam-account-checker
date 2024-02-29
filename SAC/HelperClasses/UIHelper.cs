@@ -1,21 +1,28 @@
 ﻿namespace SAC.HelperClasses
 {
-    class UIHelper
+    internal class UIHelper
     {
-        delegate void SetVisibleCallback(bool isShown);
-        delegate void SetEnabledCallback(bool isEnabled);
-        delegate void UpdateRemainingLabelCallback(string text);
-        delegate void UpdateLoggableLabelCallback(string text);
-        delegate void UpdateBadLabelCallback(string text);
-        delegate void UpdateSGProtectedLabelCallback(string text);
-        delegate void UpdateCheckedLabelCallback(string text);
-        delegate void UpdateFileTextBoxACCallback(string text);
+        private delegate void SetVisibleCallback(bool isShown);
+
+        private delegate void SetEnabledCallback(bool isEnabled);
+
+        private delegate void UpdateRemainingLabelCallback(string text);
+
+        private delegate void UpdateLoggableLabelCallback(string text);
+
+        private delegate void UpdateBadLabelCallback(string text);
+
+        private delegate void UpdateSGProtectedLabelCallback(string text);
+
+        private delegate void UpdateCheckedLabelCallback(string text);
+
+        private delegate void UpdateFileTextBoxACCallback(string text);
 
         public static void ShowUI(bool isShown)
         {
             if (Program.mw.InvokeRequired)
             {
-                SetVisibleCallback d = new SetVisibleCallback(ShowUI);
+                var d = new SetVisibleCallback(ShowUI);
                 Program.mw.loadingImage.Invoke(d, new object[] { isShown });
             }
             else
@@ -26,7 +33,7 @@
         {
             if (Program.mw.InvokeRequired)
             {
-                SetEnabledCallback d = new SetEnabledCallback(EnableUI);
+                var d = new SetEnabledCallback(EnableUI);
                 Program.mw.tabControl1.Invoke(d, new object[] { isEnabled });
             }
             else
@@ -51,7 +58,7 @@
         {
             if (Program.mw.InvokeRequired)
             {
-                UpdateRemainingLabelCallback d = new UpdateRemainingLabelCallback(UpdateRemainingLabel);
+                var d = new UpdateRemainingLabelCallback(UpdateRemainingLabel);
                 Program.mw.remainingLabel.Invoke(d, new object[] { text });
             }
             else
@@ -62,7 +69,7 @@
         {
             if (Program.mw.InvokeRequired)
             {
-                UpdateLoggableLabelCallback d = new UpdateLoggableLabelCallback(UpdateLoggableLabel);
+                var d = new UpdateLoggableLabelCallback(UpdateLoggableLabel);
                 Program.mw.loggableLabel.Invoke(d, new object[] { text });
             }
             else
@@ -73,7 +80,7 @@
         {
             if (Program.mw.InvokeRequired)
             {
-                UpdateBadLabelCallback d = new UpdateBadLabelCallback(UpdateBadLabel);
+                var d = new UpdateBadLabelCallback(UpdateBadLabel);
                 Program.mw.badLabel.Invoke(d, new object[] { text });
             }
             else
@@ -84,7 +91,7 @@
         {
             if (Program.mw.InvokeRequired)
             {
-                UpdateSGProtectedLabelCallback d = new UpdateSGProtectedLabelCallback(UpdateSGProjectedLabel);
+                var d = new UpdateSGProtectedLabelCallback(UpdateSGProjectedLabel);
                 Program.mw.steamGuardLabel.Invoke(d, new object[] { text });
             }
             else
@@ -94,7 +101,7 @@
         {
             if (Program.mw.InvokeRequired)
             {
-                UpdateCheckedLabelCallback d = new UpdateCheckedLabelCallback(UpdateCheckedLabel);
+                var d = new UpdateCheckedLabelCallback(UpdateCheckedLabel);
                 Program.mw.checkedLabel.Invoke(d, new object[] { text });
             }
             else

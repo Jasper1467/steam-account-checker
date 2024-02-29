@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\desktop\\backup\\SAC\\SAC\\SAC.csproj": {}
+    "C:\\Programming\\Forks\\steam-account-checker\\SAC\\SAC.csproj": {}
   },
   "projects": {
-    "D:\\desktop\\backup\\SAC\\SAC\\SAC.csproj": {
+    "C:\\Programming\\Forks\\steam-account-checker\\SAC\\SAC.csproj": {
       "version": "0.6.2.3",
       "restore": {
-        "projectUniqueName": "D:\\desktop\\backup\\SAC\\SAC\\SAC.csproj",
+        "projectUniqueName": "C:\\Programming\\Forks\\steam-account-checker\\SAC\\SAC.csproj",
         "projectName": "SAC",
-        "projectPath": "D:\\desktop\\backup\\SAC\\SAC\\SAC.csproj",
-        "packagesPath": "C:\\Users\\jomor\\.nuget\\packages\\",
-        "outputPath": "D:\\desktop\\backup\\SAC\\SAC\\obj\\",
+        "projectPath": "C:\\Programming\\Forks\\steam-account-checker\\SAC\\SAC.csproj",
+        "packagesPath": "C:\\Users\\Jasper\\.nuget\\packages\\",
+        "outputPath": "C:\\Programming\\Forks\\steam-account-checker\\SAC\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\jomor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Jasper\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,6 +30,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -33,10 +38,16 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "SteamKit2": {
               "target": "Package",
@@ -49,7 +60,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -61,7 +73,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     }

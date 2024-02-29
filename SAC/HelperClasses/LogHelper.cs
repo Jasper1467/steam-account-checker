@@ -3,10 +3,11 @@ using System.Windows.Forms;
 
 namespace SAC.HelperClasses
 {
-    class LogHelper
+    internal class LogHelper
     {
-        delegate void SetListAccountsCallback(Result result, string userName, string password, string extendedResultMessage);
-        delegate void SetLogCallback(string output);
+        private delegate void SetListAccountsCallback(Result result, string userName, string password, string extendedResultMessage);
+
+        private delegate void SetLogCallback(string output);
 
         public enum Result
         {
@@ -19,7 +20,7 @@ namespace SAC.HelperClasses
         {
             if (Program.mw.InvokeRequired)
             {
-                SetLogCallback d = new SetLogCallback(Log);
+                var d = new SetLogCallback(Log);
                 Program.mw.labelStatus.Invoke(d, new object[] { output });
             }
             else
@@ -30,7 +31,7 @@ namespace SAC.HelperClasses
         {
             if (Program.mw.InvokeRequired)
             {
-                SetListAccountsCallback d = new SetListAccountsCallback(ListAccountOnGUI);
+                var d = new SetListAccountsCallback(ListAccountOnGUI);
                 Program.mw.whatsHappening.Invoke(d, new object[] { result, userName, password, extendedResultMessage });
             }
             else
@@ -38,7 +39,7 @@ namespace SAC.HelperClasses
                 switch (result)
                 {
                     case Result.Success:
-                        ListViewItem successItem = new ListViewItem("✔");
+                        var successItem = new ListViewItem("✔");
                         if (Settings.showColouredItemsInAccountList == true)
                             successItem.ForeColor = Color.Green;
                         successItem.SubItems.Add(userName);
@@ -47,7 +48,7 @@ namespace SAC.HelperClasses
                         Program.mw.whatsHappening.Items.Add(successItem);
                         break;
                     case Result.SteamGuardProtected:
-                        ListViewItem sgProtectedItem = new ListViewItem("🗲");
+                        var sgProtectedItem = new ListViewItem("🗲");
                         if (Settings.showColouredItemsInAccountList == true)
                             sgProtectedItem.ForeColor = Color.Orange;
                         sgProtectedItem.SubItems.Add(userName);
@@ -56,7 +57,7 @@ namespace SAC.HelperClasses
                         Program.mw.whatsHappening.Items.Add(sgProtectedItem);
                         break;
                     case Result.Fail:
-                        ListViewItem failItem = new ListViewItem("✘");
+                        var failItem = new ListViewItem("✘");
                         if (Settings.showColouredItemsInAccountList == true)
                             failItem.ForeColor = Color.Red;
                         failItem.SubItems.Add(userName);
@@ -65,7 +66,7 @@ namespace SAC.HelperClasses
                         Program.mw.whatsHappening.Items.Add(failItem);
                         break;
                     default:
-                        ListViewItem unknownItem = new ListViewItem("???");
+                        var unknownItem = new ListViewItem("???");
                         if (Settings.showColouredItemsInAccountList == true)
                             unknownItem.ForeColor = Color.Red;
                         unknownItem.SubItems.Add(userName);
@@ -83,7 +84,7 @@ namespace SAC.HelperClasses
             if (!Program.mw.InvokeRequired)
                 Program.mw.whatsHappening.Clear();
             else
-                MessageBox.Show("jxhdjkxdhjk lmao Invoke required on control 'whatsHappening'", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"jxhdjkxdhjk lmao Invoke required on control 'whatsHappening'", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }
